@@ -68,6 +68,7 @@ vector<int> dijkstra (vector<vector<pair<int,int>>> & adjlist, int src) {
 vector<vector<int>> adjlist;
 int n = adjlist.size();
 vector<bool> visited(n, false);
+
 void dfs(int src) {
     visited[src] = true;
     for(int dest: adjlist[src])
@@ -91,6 +92,7 @@ for(int i = 0; i < 4; ++i) {
 // 8 directions
 for(int i = -1; i <= 1; ++i) {
     for(int j = -1; j <= 1; j++) {
+        if(i == 0 and j == 0) continue;
         int new_x = x + i;
         int new_y = y + j;
     }
