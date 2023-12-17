@@ -1,1 +1,7 @@
-# notes
+# Notes
+
+## Standard Algo
+
+## Data Structures
+
+## Tricks
