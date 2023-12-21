@@ -1,5 +1,24 @@
 # Notes
 
+## Important links
+
+* [Track live and upcoming contests](https://clist.by/)
+* [Must Do Coding Questions for Companies like Amazon, Microsoft, Adobe](https://www.geeksforgeeks.org/must-do-coding-questions-for-companies-like-amazon-microsoft-adobe/)
+* [Awesome competitive programming](https://github.com/lnishan/awesome-competitive-programming)
+* [Competitive Programmer’s Handbook](https://cses.fi/book/book.pdf)
+* [Errichto · GitHub - For competitive programming template](https://github.com/Errichto)
+* [TopCoder - Competitive Programming - Tutorials #articles](https://www.topcoder.com/community/competitive-programming/tutorials/)
+* [CP-Algorithms](https://cp-algorithms.com/)
+* [MAXimal :: algo](https://e-maxx.ru/algo/)
+* [All the good tutorials found for Competitive Programming - Codeforces](https://codeforces.com/blog/entry/57282)
+* [Stanford ICPC - Standford Univesity](https://cs.stanford.edu/group/acm/resources.html)
+* [Stanford University ICPC Team Notebook (2015-16)](https://cs.stanford.edu/group/acm/oldsite/SLPC/notebook.pdf)
+* [A comprehensive guide to Competitive Programming](https://codeforces.com/group/ZEXri9keRR/blog)
+* [Competitive Programming Book](https://cpbook.net/)
+* [GitHub - helloproclub/competitive-programming-cheat-sheet: C++ Cheat Sheet for ACM ICPC](https://github.com/helloproclub/competitive-programming-cheat-sheet)
+* [Bit Twiddling Hacks](https://graphics.stanford.edu/~seander/bithacks.html)
+* [Competitive Programming Articles](https://ncduy0303.github.io/Competitive-Programming/)
+
 ## Data Structures
 
 ### Disjoint Set
