@@ -50,6 +50,177 @@ struct dset {
 
 ```
 
+### Trie
+
+#### Alphabets trie using pointers
+
+```cpp
+
+```
+
+#### Trie for max XOR
+
+```cpp
+// using pointers
+struct node {
+    vector<node*> child {nullptr, nullptr};
+};
+
+void insert(node * root, int x) {
+    int test = 8;
+    for(int i = 31; i >= 0; --i) {
+        int pos = (x & (1<<i)) > 0;
+        if(!root->child[pos]) root->child[pos] = new node();
+        root = root->child[pos];
+    }
+}
+
+int txor(node* root, int x) {
+    int ans = 0;
+    for(int i = 31; i >= 0; --i) {
+        int pos = (x & (1 << i)) > 0;
+        pos ^= 1;
+        if(root->child[pos]) {
+            root = root->child[pos];
+            ans |= (1<<i);
+        }
+        else {
+            root = root->child[1-pos];
+        }
+    }
+    return ans;
+}
+
+int maxor(node * a, node * b, int pos) {
+    if(!a or !b) {
+        // cout << "Unknown" << pos << " " <<  a << " " << b << endl;
+        return 0;
+    }
+    if(pos < 0) return 0;
+    int ans = 0;
+    if((a->child[0] and b->child[1]) or (a->child[1] and b->child[0]))
+    {
+        ans |= (1<<pos);
+        ans |= max(maxor(a->child[0], b->child[1], pos-1), maxor(a->child[1], b->child[0], pos-1));
+    }
+    else {
+        if(a->child[0] and b->child[0]) {
+            ans |= maxor(a->child[0], b->child[0], pos-1);
+        }
+        else {
+            ans |= maxor(a->child[1], b->child[1], pos-1);
+        }
+    }
+    return ans;
+}
+
+class Solution {
+    node root;
+public:
+    int findMaximumXOR(vector<int>& nums) {
+        for(int x: nums) {
+            insert(&root, x);
+        }
+        return maxor(&root, &root, 31);
+    }
+};
+```
+
+```cpp
+// using global arrays
+
+const int max_n = 500005 * 20;
+int tr[max_n][2], p_idx;
+
+void insert(int x) {
+    int p = 1;
+    for(int i = 31; i>=0; --i) {
+        int idx = (x >> i) & 1 ;
+        if(!tr[p][idx]) tr[p][idx] = ++p_idx;
+        p = tr[p][idx];
+    }
+}
+
+int query(int x) {
+    int ans = 0, p = 1;
+    for(int i = 31; i >= 0; --i) {
+        int idx = !((x >> i) & 1);
+        if(tr[p][idx]) ans |= (1<<i), p = tr[p][idx];
+        else p = tr[p][!idx];
+    }
+    return ans;
+}
+
+class Solution {
+public:
+    int findMaximumXOR(vector<int>& nums) {
+        memset(tr, 0, sizeof(tr));
+        p_idx = 1;
+        for(int x: nums) {
+            insert(x);
+        }
+        int ans = 0;
+        for(int x: nums) {
+            ans = max(ans, query(x));
+        }
+        return ans;
+    }
+};
+```
+
+```cpp
+// source for above array trick
+const int N = 50005 * 20;
+
+int tr[N][2], idx, c[N];
+
+void clr() {
+	for (int i = 1; i <= idx; i++) tr[i][0] = tr[i][1] = c[i] = 0;
+	idx = 1;
+}
+
+void ins(int x, int k) {
+    int p = 1;
+    for (int i = 19; ~i; i--) {
+        int ch = x >> i & 1;
+        if(!tr[p][ch]) tr[p][ch] = ++idx;
+        p = tr[p][ch];
+        c[p] += k;
+    }
+}
+int get(int x) {
+    int p = 1, res = 0;
+    for (int i = 19; ~i; i--) {
+        int ch = !(x >> i & 1);
+        if(tr[p][ch] && c[tr[p][ch]]) res |= 1 << i, p = tr[p][ch];
+        else p = tr[p][!ch];
+    }
+    return res;
+}
+
+class Solution {
+public:
+
+    int maximumStrongPairXor(vector<int>& a) {
+    	idx = 1;
+        sort(a.begin(), a.end());
+        int n = a.size();
+        int ans = 0;
+        for (int i = 0, j = 0; i < n; i++) {
+        	ins(a[i], 1); // 1 means adding to trie
+        	while (a[i] - a[j] > a[j]) {
+        		ins(a[j], -1); // -1 means removing from trie
+        		j++;
+        	}
+        	chkMax(ans, get(a[i]));
+
+        }
+        clr();
+    	return ans;
+    }
+};
+```
+
 ## Algorithms
 
 ### Dijkstra 
