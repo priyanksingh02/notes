@@ -21,6 +21,153 @@
 
 ## Data Structures
 
+### Binary Tree
+
+#### PreOrder
+
+```cpp
+vector<int> preorderTraversal(TreeNode* root) {
+    stack<TreeNode*> st;
+    vector<int> ans;
+    if(!root) return ans;
+    st.push(root);
+    while(!st.empty()) {
+        root = st.top(); st.pop();
+        ans.push_back(root->val);
+        if(root->right) st.push(root->right);
+        if(root->left) st.push(root->left);
+    }
+    return ans;
+}
+```
+
+```cpp
+// morris preorder
+vector<int> preorderTraversal(TreeNode* root) {
+    vector<int> ans;
+    while(root) {
+        if(!root->left) {
+            ans.push_back(root->val);
+            root = root->right;
+        }
+        else {
+            auto t = root->left;
+            while(t->right and t->right != root) {
+                t = t->right;
+            }
+            if(!t->right) {
+                t->right = root;
+                ans.push_back(root->val);
+                root = root->left;
+            }
+            else {
+                t->right = nullptr;
+                root = root->right;
+            }
+        }
+    }
+    return ans;
+}
+```
+
+#### Inorder traversal
+
+```cpp
+vector<int> inorderTraversal(TreeNode* root) {
+    stack<TreeNode*> st;
+    vector<int> ans;
+    push_all(st, root);
+    while(!st.empty()) {
+        root = st.top(); st.pop();
+        ans.push_back(root->val);
+        push_all(st,root->right);
+    }
+    return ans;
+}
+
+void push_all(stack<TreeNode*> & st, TreeNode* root) {
+    while(root) {
+        st.push(root);
+        root = root->left;
+    }
+}
+```
+
+```cpp
+// morris inorder
+vector<int> inorderTraversal(TreeNode* root) {
+    vector<int> ans;
+    while(root) {
+        if(!root->left) {
+            ans.push_back(root->val);
+            root = root->right;
+        }
+        else {
+            auto t = root->left;
+            while(t->right and t->right != root) {
+                t = t->right;
+            }
+            if(!t->right) {
+                t->right = root;
+                root = root->left;
+            }
+            else {
+                t->right = nullptr;
+                ans.push_back(root->val);
+                root = root->right;
+            }
+        }
+    }
+    return ans;
+}
+```
+
+#### Postorder traversal
+
+```cpp
+vector<int> postorderTraversal(TreeNode* root) {
+    stack<TreeNode*> st;
+    vector<int> ans;
+    if(!root) return ans;
+    st.push(root);
+    while(!st.empty()) {
+        root = st.top(); st.pop();
+        ans.push_back(root->val);
+        if(root->left) st.push(root->left);
+        if(root->right) st.push(root->right);
+    }
+    reverse(ans.begin(), ans.end());
+    return ans;
+}
+```
+
+#### Pre, In and Post in single traversal
+
+```cpp
+#include<stack>
+vector<vector<int>> getTreeTraversal(TreeNode *root){
+    stack<pair<TreeNode*, int>> st;
+    if(!root)
+      return {};
+    st.push({root, 0});
+    vector<int> traverse[3]; // 0 = pre, 1 = in, 2= post 
+    while(!st.empty()) {
+        root = st.top().first;
+        int id = st.top().second;
+        st.pop();
+        traverse[id].push_back(root->data);
+        if(id <= 1) st.push({root, id + 1});
+        if(id == 0 and root->left) {
+            st.push({root->left, 0});
+        }
+        if(id == 1 and root->right) {
+            st.push({root->right, 0});
+        }
+    }
+    return {traverse[1], traverse[0], traverse[2]};
+}
+```
+
 ### Disjoint Set
 
 ```cpp
